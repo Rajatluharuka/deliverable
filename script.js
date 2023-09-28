@@ -1,3 +1,9 @@
+let naam=document.getElementById("name");
+let email=document.getElementById("email");
+let phone=document.getElementById("phone");
+let date=document.getElementById("start");
+let time=document.getElementById("time");
+let forms=document.getElementById("registration-form");
 document.getElementById("registration-form").addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -8,5 +14,20 @@ document.getElementById("registration-form").addEventListener("submit", function
         data[key] = value;
     });
     const userData = JSON.stringify(data);
-    localStorage.setItem("user",userData);
+    console.log(userData);
+    localStorage.setItem(email.value,userData);
+
+    let userList=document.createElement('ul');
+    let user=document.createElement('li');
+    user.appendChild(document.createTextNode(naam.value));
+    user.appendChild(document.createTextNode(' - '));
+    user.appendChild(document.createTextNode(email.value));
+    user.appendChild(document.createTextNode(' - '));
+    user.appendChild(document.createTextNode(phone.value));
+    user.appendChild(document.createTextNode(' - '));
+    user.appendChild(document.createTextNode(date.value));
+    user.appendChild(document.createTextNode(' - '));
+    user.appendChild(document.createTextNode(time.value));
+    userList.appendChild(user);
+    forms.appendChild(userList);
 });
