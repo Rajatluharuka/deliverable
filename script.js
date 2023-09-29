@@ -8,17 +8,17 @@ let userList=document.createElement('ul');
 userList.className = 'userList';
 userList.id = 'list';
 forms.appendChild(userList);
+const data = {};
 document.getElementById("registration-form").addEventListener('submit', function(event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
-    const data = {};
 
     formData.forEach((value, key) => {
         data[key] = value;
     });
     const userData = JSON.stringify(data);
-    localStorage.setItem(email.value,userData);
+    localStorage.setItem(data.email,userData);
 
     let user=document.createElement('li');
     user.appendChild(document.createTextNode(naam.value));
@@ -35,14 +35,33 @@ document.getElementById("registration-form").addEventListener('submit', function
     deleteBtn.className = 'delete';
     deleteBtn.appendChild(document.createTextNode('Delete'));
     user.appendChild(deleteBtn);
+    let editBtn=document.createElement('button');
+    editBtn.className = 'edit';
+    editBtn.appendChild(document.createTextNode('Edit'));
+    user.appendChild(editBtn);
     userList.appendChild(user);
 });
-console.log(document.getElementById("list"));
 document.getElementById("list").addEventListener('click',function(e) {
     if(e.target.classList.contains('delete')){
         let user=e.target.parentElement;
+        let remUser = user.childNodes[2].textContent;
+        localStorage.removeItem(remUser);
         document.getElementById("list").removeChild(user);
+    }
+});
+
+document.getElementById("list").addEventListener('click',function(e) {
+    if(e.target.classList.contains('edit')){
+        let user=e.target.parentElement;
+        let remUser = user.childNodes[2].textContent;
+
+        naam.value = user.childNodes[0].textContent;
+        email.value = user.childNodes[2].textContent;
+        phone.value = user.childNodes[4].textContent; 
+        date.value = user.childNodes[6].textContent;
+        time.value = user.childNodes[8].textContent; 
         
-        localStorage.removeItem(email.value);
+        localStorage.removeItem(remUser);
+        document.getElementById("list").removeChild(user);
     }
 });
