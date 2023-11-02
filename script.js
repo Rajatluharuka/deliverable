@@ -4,6 +4,7 @@ let phone=document.getElementById("phone");
 let date=document.getElementById("start");
 let time=document.getElementById("time");
 let forms=document.getElementById("registration-form");
+
 document.getElementById("registration-form").addEventListener("submit", function(event) {
     event.preventDefault();
 
@@ -21,6 +22,7 @@ document.getElementById("registration-form").addEventListener("submit", function
         console.log(err);
     });
 });
+
 function showData(data)
 {
     let userList=document.createElement('ul');
