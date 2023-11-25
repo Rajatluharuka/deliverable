@@ -1,8 +1,3 @@
-let naam=document.getElementById("name");
-let email=document.getElementById("email");
-let phone=document.getElementById("phone");
-let date=document.getElementById("start");
-let time=document.getElementById("time");
 let forms=document.getElementById("registration-form");
 let userList=document.createElement('ul');
 userList.className = 'userList';
@@ -18,7 +13,7 @@ document.getElementById("registration-form").addEventListener("submit", function
     formData.forEach((value, key) => {
         data[key] = value;
     });
-    axios.post("https://crudcrud.com/api/0c1524c3b83845bf880a83f2514afe02/appointmentData",data)
+    axios.post("https://crudcrud.com/api/c727bc2b952e43d5aaa5c30edeb5f594/appointmentData",data)
     .then((response) => {
         showData(response.data);
     }).catch((err) => {
@@ -27,7 +22,7 @@ document.getElementById("registration-form").addEventListener("submit", function
 });
 
 window.addEventListener("DOMContentLoaded",()=>{
-    axios.get("https://crudcrud.com/api/0c1524c3b83845bf880a83f2514afe02/appointmentData")
+    axios.get("https://crudcrud.com/api/c727bc2b952e43d5aaa5c30edeb5f594/appointmentData")
     .then((response) => {
         for(let i=0;i<response.data.length;i++){
         showData(response.data[i]);
@@ -37,9 +32,26 @@ window.addEventListener("DOMContentLoaded",()=>{
     });
 })
 
+document.getElementById("list").addEventListener('click',function(e) {
+    if(e.target.classList.contains('delete')){
+        let user=e.target.parentElement;
+        let remUser = e.target.parentElement.dataset.id;
+        document.getElementById("list").removeChild(user);
+
+    axios.delete(`https://crudcrud.com/api/c727bc2b952e43d5aaa5c30edeb5f594/appointmentData/${remUser}`)
+    .then((response) => {
+        console.log(response);
+    }).catch((err) => {
+        console.log(err);
+    });
+ }
+});
+
 function showData(userData)
 {
     let user=document.createElement('li');
+    user.dataset.id =`${userData._id}`;
+
     user.appendChild(document.createTextNode(userData.name));
     user.appendChild(document.createTextNode(' - '));
     user.appendChild(document.createTextNode(userData.email));
